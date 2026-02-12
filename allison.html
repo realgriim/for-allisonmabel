@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Allison ❤️</title>
+    <style>
+        body {
+            background-color: #fce4ec; /* Soft Pastel Pink */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+            text-align: center;
+            color: white;
+        }
+
+        .container {
+            background: #f8bbd0; /* Pastel Pink Container */
+            padding: 2rem;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 2px solid #f48fb1;
+            max-width: 400px; /* Perfect for phone and desktop */
+            width: 85%;
+            z-index: 10;
+            position: relative;
+            margin: 20px;
+        }
+
+        .gif-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .gif-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            display: block;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin: 10px 0;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            line-height: 1.4;
+        }
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap; /* Allows buttons to stack on very small phones */
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            min-height: 80px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            touch-action: manipulation; /* Improves mobile responsiveness */
+        }
+
+        #yesBtn {
+            background-color: #f06292;
+            color: white;
+        }
+
+        #noBtn {
+            background-color: #fce4ec;
+            color: #f06292;
+            z-index: 999;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .heart-bg {
+            position: absolute;
+            color: #f48fb1;
+            font-size: 20px;
+            user-select: none;
+            z-index: 1;
+            animation: move linear infinite;
+        }
+
+        @keyframes move {
+            from { transform: translateY(100vh); }
+            to { transform: translateY(-10vh); }
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 480px) {
+            h1 { font-size: 1.5rem; }
+            p { font-size: 1.1rem; }
+            .container { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="mainContent" class="container">
+        <div class="gif-container">
+            <img src="https://tenor.com/view/snoopy-kiss-heart-love-gif-16829917" alt="Snoopy Kiss">
+        </div>
+        <h1>Hi Mi Hermosa Allison!</h1>
+        <p>Will you be my valentines mamas?</p>
+        
+        <div class="buttons">
+            <button id="yesBtn" onclick="celebrate()">Yes!</button>
+            <button id="noBtn" onclick="handleNoClick()" onmouseover="handleNoHover()" ontouchstart="handleNoHover()">No</button>
+        </div>
+    </div>
+
+    <div id="celebration" class="container hidden">
+        <div class="gif-container">
+            <img src="https://tenor.com/view/dancing-snoopy-peanuts-having-fun-grooving-gif-5217983972176596928" alt="Happy Snoopy">
+        </div>
+        <h1>THANK YOU AMOR! ❤️</h1>
+        <p>I knew you would NEVER say no :)<br><br>I love you mi hermosa perfecta mamas :)</p>
+    </div>
+
+    <script>
+        let noCount = 0;
+        const noPhrases = [
+            "Are you sure amor?",
+            "PLEASE MAMAS :(",
+            "You no love me >:("
+        ];
+
+        function handleNoClick() {
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            
+            if (noCount < 3) {
+                noBtn.innerHTML = noPhrases[noCount];
+                // Yes button grows significantly
+                let currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+                yesBtn.style.fontSize = (currentSize + 12) + "px";
+                yesBtn.style.padding = (parseFloat(window.getComputedStyle(yesBtn).padding) + 8) + "px";
+                noCount++;
+            }
+        }
+
+        function handleNoHover() {
+            if (noCount >= 3) {
+                const btn = document.getElementById('noBtn');
+                // Ensure button stays within screen bounds
+                const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+                const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+                
+                btn.style.position = 'fixed';
+                btn.style.left = x + 'px';
+                btn.style.top = y + 'px';
+            }
+        }
+
+        function celebrate() {
+            document.getElementById('mainContent').classList.add('hidden');
+            document.getElementById('celebration').classList.remove('hidden');
+            document.body.style.backgroundColor = "#f8bbd0";
+            createHearts();
+        }
+
+        function createHearts() {
+            for(let i=0; i<25; i++) {
+                let heart = document.createElement('div');
+                heart.innerHTML = "❤️";
+                heart.classList.add('heart-bg');
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+                heart.style.opacity = Math.random();
+                document.body.appendChild(heart);
+            }
+        }
+    </script>
+</body>
+</html>
